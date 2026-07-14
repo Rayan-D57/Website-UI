@@ -138,24 +138,6 @@ During this project, the following concepts were implemented:
 
 ---
 
-# Project Structure
-Customer-Management-System/
-│
-├── index.html
-├── customers.html
-├── style.css
-├── script.js
-│
-├── images/
-│   ├── home.png
-│   ├── success.png
-│   ├── error.png
-│   └── customers.png
-│
-└── README.md
-
----
-
 # Future Improvements
 
 Possible future enhancements include:
