@@ -62,7 +62,7 @@ Two main actions are available:
 
 The interface was designed with a simple and modern layout to provide a smooth user experience.
 
-<img src="رابط_الصورة" alt="Main Interface" width="500"/>
+<img src="home.png" alt="Main Interface" width="500"/>
 
 ---
 
