@@ -74,7 +74,7 @@ If all fields are valid and the customer ID does not already exist, the customer
 
 This provides immediate feedback to the user that the operation has been completed successfully.
 
-<img src="رابط_الصورة" alt="Success Message" width="500"/>
+<img src="success.png" alt="Success Message" width="500"/>
 
 ---
 
@@ -90,7 +90,7 @@ If a duplicate ID is detected:
 
 This validation helps maintain unique customer records and improves data reliability.
 
-<img src="رابط_الصورة" alt="Duplicate Customer" width="500"/>
+<img src="error.png" alt="Duplicate Customer" width="500"/>
 
 ---
 
@@ -117,7 +117,7 @@ The page also provides:
 
 The table updates dynamically, making customer management easier.
 
-<img src="رابط_الصورة" alt="Customer List" width="500"/>
+<img src="customers.png" alt="Customer List" width="500"/>
 
 ---
 
