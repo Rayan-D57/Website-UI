@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام إدارة العملاء</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #FFF8DC;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* خلفية دوار الشمس */
+        body::before {
+            content: '🌻';
+            position: fixed;
+            font-size: 12rem;
+            top: -5%;
+            left: -3%;
+            opacity: 0.08;
+            transform: rotate(-15deg);
+            pointer-events: none;
+            z-index: 0;
+        }
+        body::after {
+            content: '🌻';
+            position: fixed;
+            font-size: 10rem;
+            bottom: -5%;
+            right: -3%;
+            opacity: 0.07;
+            transform: rotate(20deg);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .sunflower {
+            position: fixed;
+            font-size: 3rem;
+            opacity: 0.1;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .sunflower:nth-child(1) { top: 10%; right: 5%; font-size: 4rem; }
+        .sunflower:nth-child(2) { top: 20%; left: 8%; font-size: 3.5rem; }
+        .sunflower:nth-child(3) { bottom: 15%; right: 8%; font-size: 5rem; }
+        .sunflower:nth-child(4) { bottom: 20%; left: 5%; font-size: 3.8rem; }
+        .sunflower:nth-child(5) { top: 50%; right: 3%; font-size: 2.5rem; }
+        .sunflower:nth-child(6) { top: 45%; left: 3%; font-size: 2.8rem; }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            margin: 0 auto;
+            background: rgba(255, 252, 245, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(80, 60, 30, 0.15);
+            position: relative;
+            z-index: 1;
+            border: 1px solid rgba(255, 218, 185, 0.3);
+        }
+
+        /* ===== العنوان ===== */
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            font-size: 2.2rem;
+            color: #5C4033;
+            margin-bottom: 5px;
+        }
+        .header h1 i {
+            color: #D4A373;
+        }
+        .header p {
+            color: #8B6B5E;
+            font-size: 1rem;
+        }
+
+        /* ===== نموذج الإدخال ===== */
+        .form-group {
+            margin-bottom: 18px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #5C4033;
+            margin-bottom: 5px;
+            font-size: 0.95rem;
+            text-align: right;
+        }
+        .form-group label i {
+            color: #D4A373;
+            margin-left: 8px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #f0e6d8;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            background: #fcf9f5;
+            color: #3d2b1f;
+            text-align: right;
+        }
+        .form-group input:focus {
+            border-color: #D4A373;
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(212, 163, 115, 0.15);
+            background: #fff;
+        }
+        .form-group input::placeholder {
+            color: #B8957A;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        /* ===== أزرار ===== */
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-submit {
+            flex: 1;
+            padding: 16px;
+            background: #D4A373;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            min-width: 150px;
+        }
+        .btn-submit:hover {
+            background: #B8860B;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(184, 134, 11, 0.3);
+        }
+        .btn-submit:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-view {
+            flex: 1;
+            padding: 16px;
+            background: transparent;
+            color: #8B6B5E;
+            border: 2px solid #D4A373;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-decoration: none;
+            min-width: 150px;
+        }
+        .btn-view:hover {
+            background: #D4A373;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(212, 163, 115, 0.3);
+        }
+
+        /* ===== التنبيهات ===== */
+        .alert {
+            padding: 15px 20px;
+            border-radius: 12px;
+            margin-top: 15px;
+            display: none;
+            text-align: right;
+        }
+        .alert.success {
+            display: block;
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .alert.error {
+            display: block;
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .btn-retry {
+            width: 100%;
+            padding: 12px;
+            background: #D4A373;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 10px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .btn-retry:hover {
+            background: #B8860B;
+        }
+
+        /* ===== التذييل ===== */
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 218, 185, 0.3);
+            color: #A0806A;
+            font-size: 0.9rem;
+        }
+
+        /* ===== استجابة للشاشات الصغيرة ===== */
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px;
+            }
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            .sunflower {
+                display: none;
+            }
+            .header h1 {
+                font-size: 1.6rem;
+            }
+            .btn-group {
+                flex-direction: column;
+            }
+            .btn-submit,
+            .btn-view {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- زهور دوار الشمس -->
+    <div class="sunflower">🌻</div>
+    <div class="sunflower">🌻</div>
+    <div class="sunflower">🌻</div>
+    <div class="sunflower">🌻</div>
+    <div class="sunflower">🌻</div>
+    <div class="sunflower">🌻</div>
+
+    <div class="container">
+        <!-- ===== العنوان ===== -->
+        <div class="header">
+            <h1><i class="fas fa-user-plus"></i> نموذج بيانات العميل</h1>
+            <p>📝 أدخل بيانات العميل الجديد</p>
+        </div>
+
+        <!-- ===== نموذج الإدخال ===== -->
+        <form id="entryForm">
+            <!-- الصف الأول: المعرف والعمر -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label><i class="fas fa-id-card"></i>ID</label>
+                    <input type="text" id="customerIdInput" placeholder="مثال: CUST-001" required>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-calendar-alt"></i> العمر</label>
+                    <input type="number" id="ageInput" placeholder="أدخل العمر" min="1" max="130" required>
+                </div>
+            </div>
+
+            <!-- الصف الثاني: الاسم الأول واسم العائلة -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label><i class="fas fa-user"></i> الاسم الأول</label>
+                    <input type="text" id="firstNameInput" placeholder="أدخل الاسم الأول" required>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-user-tag"></i> اسم العائلة</label>
+                    <input type="text" id="lastNameInput" placeholder="أدخل اسم العائلة" required>
+                </div>
+            </div>
+
+            <!-- ===== الأزرار ===== -->
+            <div class="btn-group">
+                <button type="submit" class="btn-submit" id="submitBtn">
+                    <i class="fas fa-paper-plane"></i> إضافة العميل
+                </button>
+                <a href="records.html" class="btn-view" id="viewRecordsBtn">
+                    <i class="fas fa-table"></i> عرض جميع العملاء
+                </a>
+            </div>
+        </form>
+
+        <!-- ===== التنبيهات ===== -->
+        <div id="alertMessage" class="alert"></div>
+        <button class="btn-retry" id="retryBtn" onclick="retryConnection()">
+            <i class="fas fa-sync"></i> إعادة المحاولة
+        </button>
+
+        <!-- ===== التذييل ===== -->
+        <div class="footer">
+            <i class="fas fa-database"></i> نظام إدارة بيانات العملاء
+        </div>
+    </div>
+
+    <script>
+        // ===== إعدادات API =====
+        const API = {
+            insert: 'config.php?action=insert'
+        };
+
+        // ===== عناصر DOM =====
+        const form = document.getElementById('entryForm');
+        const customerIdInput = document.getElementById('customerIdInput');
+        const firstNameInput = document.getElementById('firstNameInput');
+        const lastNameInput = document.getElementById('lastNameInput');
+        const ageInput = document.getElementById('ageInput');
+        const submitBtn = document.getElementById('submitBtn');
+        const alertDiv = document.getElementById('alertMessage');
+        const retryBtn = document.getElementById('retryBtn');
+
+        // ===== عرض التنبيهات =====
+        function showAlert(message, type) {
+            alertDiv.textContent = message;
+            alertDiv.className = 'alert ' + type;
+            if (type === 'error') {
+                retryBtn.style.display = 'flex';
+            } else {
+                retryBtn.style.display = 'none';
+            }
+            setTimeout(() => {
+                alertDiv.className = 'alert';
+                retryBtn.style.display = 'none';
+            }, 8000);
+        }
+
+        // ===== إعادة المحاولة =====
+        function retryConnection() {
+            retryBtn.style.display = 'none';
+            showAlert('🔄 جاري إعادة المحاولة...', '');
+            // إعادة تمكين الزر
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> إضافة العميل';
+        }
+
+        // ===== إرسال النموذج =====
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const customerId = customerIdInput.value.trim();
+            const firstName = firstNameInput.value.trim();
+            const lastName = lastNameInput.value.trim();
+            const age = ageInput.value.trim();
+
+            // ===== التحقق من الحقول =====
+            if (!customerId || !firstName || !lastName || !age) {
+                showAlert('⚠️ يرجى ملء جميع الحقول.', 'error');
+                return;
+            }
+            if (isNaN(age) || parseInt(age) < 1 || parseInt(age) > 130) {
+                showAlert('⚠️ العمر يجب أن يكون بين 1 و 130.', 'error');
+                return;
+            }
+
+            // ===== تعطيل الزر أثناء الإرسال =====
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> جاري الإضافة...';
+
+            // ===== إرسال الطلب =====
+            fetch(API.insert, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: `customer_id=${encodeURIComponent(customerId)}&firstname=${encodeURIComponent(firstName)}&lastname=${encodeURIComponent(lastName)}&age=${encodeURIComponent(age)}`
+                })
+                .then(res => {
+                    if (!res.ok) throw new Error('Network error');
+                    return res.json();
+                })
+                .then(data => {
+                    if (data.status === 'success') {
+                        showAlert('✅ تم إضافة العميل بنجاح!', 'success');
+                        // تفريغ الحقول
+                        customerIdInput.value = '';
+                        firstNameInput.value = '';
+                        lastNameInput.value = '';
+                        ageInput.value = '';
+                    } else {
+                        showAlert('❌ خطأ: ' + (data.message || 'لا يمكن إضافة العميل.'), 'error');
+                    }
+                })
+                .catch(err => {
+                    console.error('Error:', err);
+                    showAlert('❌ خطأ في الشبكة، اضغط "إعادة المحاولة"', 'error');
+                })
+                .finally(() => {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> إضافة العميل';
+                });
+        });
+    </script>
+</body>
+</html>
