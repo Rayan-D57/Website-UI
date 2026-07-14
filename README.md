@@ -62,7 +62,7 @@ Two main actions are available:
 
 The interface was designed with a simple and modern layout to provide a smooth user experience.
 
-![Main Interface](images/home.png)
+<img src="رابط_الصورة" alt="Main Interface" width="500"/>
 
 ---
 
@@ -74,7 +74,7 @@ If all fields are valid and the customer ID does not already exist, the customer
 
 This provides immediate feedback to the user that the operation has been completed successfully.
 
-![Success Message](images/success.png)
+<img src="رابط_الصورة" alt="Success Message" width="500"/>
 
 ---
 
@@ -90,7 +90,7 @@ If a duplicate ID is detected:
 
 This validation helps maintain unique customer records and improves data reliability.
 
-![Duplicate Customer](images/error.png)
+<img src="رابط_الصورة" alt="Duplicate Customer" width="500"/>
 
 ---
 
@@ -117,7 +117,7 @@ The page also provides:
 
 The table updates dynamically, making customer management easier.
 
-![Customer List](images/customers.png)
+<img src="رابط_الصورة" alt="Customer List" width="500"/>
 
 ---
 
