@@ -74,7 +74,7 @@ If all fields are valid and the customer ID does not already exist, the customer
 
 This provides immediate feedback to the user that the operation has been completed successfully.
 
-<img src="success.png" alt="Success Message" width="300"/>
+<img src="success.png" alt="Success Message" width="500"/>
 
 ---
 
